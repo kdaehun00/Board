@@ -1,0 +1,171 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* 헤더 스타일 (아무 말 대잔치 디자인 유지) */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 중앙 정렬 */
+h1 {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* 프로필 이미지 */
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* 본문 중앙 정렬을 위한 컨테이너 */
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: -50px; /* 살짝 위로 이동 */
+}
+
+/* 게시판 설명 */
+.description {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 게시글 목록을 중앙 정렬 */
+#post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* 버튼 위치 조정을 위해 relative 설정 */
+    width: 100%;
+}
+
+/* 게시글 목록 */
+#post-list {
+    width: 50%;
+    max-width: 500px;
+    margin-top: 20px;
+    position: relative;
+}
+
+/* 게시글 카드 스타일 */
+.post-item {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-align: left;
+    position: relative;
+}
+
+/* 게시글 작성 버튼을 첫 번째 게시글의 오른쪽 위에 배치 */
+#write-post-btn {
+    position: absolute;
+    top: -40px;
+    right: 400px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#write-post-btn:hover {
+    background-color: #7F6AEE;
+}
+
+
+.post-item:hover {
+    transform: scale(1.02);
+}
+
+/* 게시글 제목 */
+.post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 게시글 메타 정보 */
+.post-meta {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* 작성자 & 날짜 */
+.post-author, .post-date {
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0;
+}
+
+/* 프로필 컨테이너 */
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 프로필 이미지 */
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* 드롭다운 메뉴 스타일 */
+.profile-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 150px;
+    display: none; /* 기본적으로 숨김 */
+}
+
+.profile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-menu li {
+    padding: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.profile-menu li:hover {
+    background: #f0f0f0;
+}
+
+.profile-menu a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}

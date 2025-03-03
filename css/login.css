@@ -1,0 +1,101 @@
+/* 가운데 정렬 텍스트 스타일 */
+.center-text {
+    font-size: 30px;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* 중앙 정렬을 위한 컨테이너 */
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 방향 중앙 정렬 */
+    align-items: center; /* 가로 방향 중앙 정렬 */
+    height: 100vh; /* 전체 높이 */
+    width: 100%;
+    transform: translateY(-100px); /* 폼을 100px 위로 이동 */
+}
+
+
+/* 로그인 폼과 버튼을 포함하는 박스 */
+#content {
+    display: flex;
+    flex-direction: column;  /* 세로로 배치한다. */
+    align-items: center;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;  /* 박스 모서리 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* 박스에 그림자 추가 (입체감) */
+}
+
+/* 로그인 폼 스타일 */
+#login-form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+#login-form div {
+    margin-bottom: 15px;
+}
+
+#login-form label {
+    display: block;  /* block으로 하여 input 위에 배치 */
+    margin-bottom: 5px;
+}
+
+#login-form input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* 오류 메시지 스타일 */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* 버튼 컨테이너 */
+#login-buttons {
+    width: 300px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 버튼 기본 스타일 */
+#login-buttons button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: not-allowed;
+    transition: background-color 0.3s;
+}
+
+/* 로그인 버튼 (비활성화 상태) */
+#login-btn {
+    background-color: #ACA0EB;
+    color: #fff;
+}
+
+/* 로그인 버튼 (활성화 상태) */
+#login-btn.active {
+    background-color: #7F6AEE;
+    cursor: pointer;
+}
+
+/* 회원가입 버튼 스타일 */
+#signup-btn {
+    font-size: 15px;
+    color: #000000;
+    cursor: pointer;
+}

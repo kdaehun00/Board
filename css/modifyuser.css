@@ -1,0 +1,110 @@
+/* 공통 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  /* 수정 페이지 컨테이너 */
+  .modify-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* 입력 폼 그룹 스타일 */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* 버튼 그룹 스타일 */
+  .button-group {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .button-group button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  /* 수정하기 버튼 스타일 */
+  #modifyBtn {
+    background-color: #4CAF50;  /* 초록색 배경 */
+    color: #fff;
+  }
+  /* 수정 완료 버튼 스타일 */
+  #modifyDoneBtn {
+    background-color: #6c757d;  /* 회색 배경 */
+    color: #fff;
+  }
+  
+  /* 회원 탈퇴 버튼 스타일 */
+  .delete-section {
+    text-align: center;
+    margin-top: 30px;
+  }
+  #deleteBtn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f44336; /* 빨간색 배경 */
+    color: #fff;
+  }
+  
+  /* 모달(탈퇴 확인) 오버레이 */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* display: none;  숨김/표시는 style 속성으로 제어 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* 모달 콘텐츠 박스 */
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .modal-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  /* 모달 버튼 스타일 (예/아니오) */
+  .modal-content button {
+    padding: 6px 12px;
+    margin: 0 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #confirmDeleteBtn {
+    background-color: #f44336; /* 예 -> 빨간색 (위험 동작) */
+    color: #fff;
+  }
+  #cancelDeleteBtn {
+    background-color: #6c757d; /* 아니오 -> 회색 */
+    color: #fff;
+  }
+  
