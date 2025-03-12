@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 상세 조회</title>
+  <link rel="stylesheet" href="../css/postdetail.css">
+</head>
+<body>
+  <div class="post-detail-container">
+    <h2 id="post-title">게시물 제목</h2>
+    <p id="post-content">게시물 내용</p>
+    <p class="author"><strong>작성자:</strong> <span id="post-author"></span></p>
+    <p class="date"><strong>작성일:</strong> <span id="post-date"></span></p>
+    <p><strong>조회수:</strong> <span id="post-views">0</span></p>
+    <p><strong>좋아요:</strong> <span id="post-likes">0</span> <button id="like-btn">👍 좋아요</button></p>
+    <p><strong>댓글 수:</strong> <span id="comment-count">0</span></p>
+
+    <div id="post-actions" style="display: none;">
+      <button id="edit-post">✏️ 수정</button>
+      <button id="delete-post">🗑 삭제</button>
+    </div>
+
+    <h3>댓글</h3>
+    <div class="comment-section">
+      <div class="form-group">
+        <textarea id="comment-input" placeholder="댓글을 입력하세요"></textarea>
+      </div>
+      <button id="submit-comment" type="button">댓글 작성</button>
+    </div>
+
+    <ul id="comment-list"></ul>
+  </div>
+
+  <script src="../js/postdetail.js" type="module"></script>
+</body>
+</html>

@@ -1,5 +1,3 @@
-import { posts } from "../data/posts.js";
-
 document.addEventListener("DOMContentLoaded", function () {
     const postList = document.getElementById("post-list");
     const writePostButton = document.getElementById("write-post-btn");
@@ -10,11 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 프로필 이미지 클릭 시 메뉴 토글
     profileImg.addEventListener("click", function (event) {
-        event.stopPropagation(); // 클릭 이벤트 전파 방지
+        event.stopPropagation();
         profileMenu.style.display = (profileMenu.style.display === "block") ? "none" : "block";
     });
 
-    // 메뉴 바깥을 클릭하면 닫힘
     document.addEventListener("click", function (event) {
         if (!profileMenu.contains(event.target) && event.target !== profileImg) {
             profileMenu.style.display = "none";
@@ -23,12 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 로그아웃 기능
     logoutBtn.addEventListener("click", function () {
-        localStorage.removeItem("loggedInUser"); // 로그인 정보 삭제
+        localStorage.removeItem("loggedInUser");
         alert("로그아웃 되었습니다.");
-        window.location.href = "login.html"; // 로그인 페이지로 이동
+        window.location.href = "login.html";
     });
     
-    // 게시글 데이터 포맷팅 함수 (조회수 1000 이상 단위 변환)
+    // 숫자 포맷팅 함수
     function formatNumber(num) {
         if (num >= 100000) return Math.floor(num / 1000) + "k";
         if (num >= 10000) return (num / 1000).toFixed(0) + "k";
@@ -36,35 +33,65 @@ document.addEventListener("DOMContentLoaded", function () {
         return num;
     }
 
-    // 게시글 목록 렌더링
-    function renderPosts() {
-        postList.innerHTML = ""; // 기존 목록 초기화
+    // 게시글 목록을 가져오는 비동기 함수
+    async function fetchPosts() {
+        try {
+            const response = await fetch("http://localhost:8080/posts"); // 백엔드 요청
+            if (!response.ok) throw new Error("서버 응답 실패");
+
+            const posts = await response.json(); // JSON 변환
+            console.log("불러온 게시물 목록:", posts);
+            return posts;
+        } catch (error) {
+            console.error("게시물 불러오기 오류:", error);
+            return [];
+        }
+    }
+
+    // 게시글 목록을 렌더링하는 함수
+    async function renderPosts() {
+        postList.innerHTML = ""; // 기존 게시글 목록 초기화
+
+        const posts = await fetchPosts(); // 게시글 가져오기
+
         posts.forEach(post => {
             const postItem = document.createElement("div");
             postItem.classList.add("post-item");
+
             postItem.innerHTML = `
                 <h3 class="post-title">${post.title.length > 26 ? post.title.substring(0, 26) + "..." : post.title}</h3>
                 <p class="post-meta">
-                    좋아요 ${post.likes} ・ 댓글 ${post.comments} ・ 조회수 ${formatNumber(post.views)}
+                    좋아요 ${post.likes || 0} ・ 댓글 ${post.comments ? post.comments.length : 0} ・ 조회수 ${formatNumber(post.views || 0)}
                 </p>
                 <p class="post-author">${post.author}</p>
                 <p class="post-date">${post.date}</p>
             `;
 
-            // 게시글 클릭 시 상세 페이지로 이동
-            postItem.addEventListener("click", function () {
-                window.location.href = `postdetail.html?id=${post.id}`;
+            // 게시물 클릭 이벤트 추가
+            postItem.addEventListener("click", async function () {
+                try {
+                    const response = await fetch(`http://localhost:8080/posts/${post.id}`); // 올바른 URL 사용
+                    if (!response.ok) throw new Error("게시물 데이터를 불러오는 데 실패했습니다.");
+                    
+                    const postData = await response.json();
+                    console.log("게시물 데이터:", postData);
+                    
+                    // 상세 페이지로 이동하면서 postId를 URL에 포함
+                    window.location.href = `postdetail.html?id=${post.id}`;
+                } catch (error) {
+                    console.error("게시물 상세 조회 오류:", error);
+                }
             });
 
             postList.appendChild(postItem);
         });
     }
 
-    // 초기 게시글 렌더링
+    // 초기 게시글 목록 렌더링
     renderPosts();
 
     // 게시글 작성 페이지로 이동
     writePostButton.addEventListener("click", function () {
-        window.location.href = "writepost.html";
+        window.location.href = "createpost.html";
     });
 });
