@@ -49,27 +49,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 로그인 버튼 클릭 이벤트
-    loginButton.addEventListener("click", function (event) {
+    loginButton.addEventListener("click", async function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
         if (loginButton.disabled) return;
 
-        const email = emailInput.value;
-        const password = passwordInput.value;
+        const email = emailInput.value.trim();
 
-        const user = users.find(u => u.email === email && u.password === password);
+        const password = passwordInput.value.trim();
 
+        try{
+            const response = await fetch("http://localhost:8080/login",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({email, password})
+            });
+            if (!response.ok) {
+                throw new Error("서버 응답 오류");
+            }
 
-        if (user) {
-            alert(`로그인 성공! 환영합니다, ${user.nickname}님.`);
+            const data = await response.json();
 
-            localStorage.setItem("email", user.email);
-            localStorage.setItem("nickname", user.nickname);
-
-            // 페이지 이동
-            window.location.href = "postboard.html";
-        } else {
-            alert("이메일 또는 비밀번호를 확인하세요.");
-            passwordInput.value = ""; // 비밀번호 초기화
+            if(data.success) {
+                alert(data.message);
+                window.location.href = "postboard.html"; // 게시판 페이지로 이동
+            } else {
+                alert(data.message);
+                passwordInput.value = ""; // 비밀번호 초기화
+            }
+        } catch (error) {
+            alert("서버 연결에 실패했습니다.");
         }
     });
 
