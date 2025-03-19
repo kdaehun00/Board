@@ -1,0 +1,122 @@
+/* 전체 스타일 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+/* 배너 스타일 */
+.center-text {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 30px;
+  padding-top: 10px;
+}
+
+/* 배너 아래 구분선 */
+.banner-line {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #ccc;
+  margin-top: 10px; 
+  margin-bottom: 20px;
+}
+
+/* 수정 페이지 컨테이너 */
+.modify-container {
+  max-width: 600px;
+  width: 80%;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-section img {
+  width: 80px; /* 기존보다 작게 */
+  height: 80px;
+  border-radius: 50%; /* 원형 스타일 적용 */
+  object-fit: cover; /* 이미지 비율 유지 */
+  cursor: pointer;
+}
+
+/* 입력 필드 스타일 */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 버튼 그룹 스타일 */
+.button-group {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.button-group button {
+  padding: 12px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* 수정하기 버튼 */
+#modifyBtn {
+  background-color: #ACA0EB;
+  color: white;
+}
+
+#modifyBtn:hover {
+  background-color: #7F6AEE;
+}
+
+/* 수정 완료 버튼 */
+#modifyDoneBtn {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* 회원 탈퇴 버튼 */
+.delete-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#deleteBtn {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #f44336;
+  color: white;
+}
+
+#deleteBtn:hover {
+  background-color: #d32f2f;
+}

@@ -5,7 +5,8 @@
     text-align: center;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -13,23 +14,30 @@ html, body {
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 세로 방향 중앙 정렬 */
-    align-items: center; /* 가로 방향 중앙 정렬 */
-    height: 100vh; /* 전체 높이 */
+    justify-content: center;
+    /* 세로 방향 중앙 정렬 */
+    align-items: center;
+    /* 가로 방향 중앙 정렬 */
+    height: 100vh;
+    /* 전체 높이 */
     width: 100%;
-    transform: translateY(-100px); /* 폼을 100px 위로 이동 */
+    transform: translateY(-100px);
+    /* 폼을 100px 위로 이동 */
 }
 
 
 /* 로그인 폼과 버튼을 포함하는 박스 */
 #content {
     display: flex;
-    flex-direction: column;  /* 세로로 배치한다. */
+    flex-direction: column;
+    /* 세로로 배치한다. */
     align-items: center;
     background: #f9f9f9;
     padding: 30px;
-    border-radius: 8px;  /* 박스 모서리 둥글게 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* 박스에 그림자 추가 (입체감) */
+    border-radius: 8px;
+    /* 박스 모서리 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* 박스에 그림자 추가 (입체감) */
 }
 
 /* 로그인 폼 스타일 */
@@ -45,7 +53,8 @@ html, body {
 }
 
 #login-form label {
-    display: block;  /* block으로 하여 input 위에 배치 */
+    display: block;
+    /* block으로 하여 input 위에 배치 */
     margin-bottom: 5px;
 }
 

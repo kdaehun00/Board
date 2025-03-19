@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세보기</title>
+    <link rel="stylesheet" href="../css/postdetail.css">
+    <script defer src="../js/postdetail.js"></script>
+</head>
+<body>
+    <!-- 뒤로가기 버튼 -->
+    <button id="back-btn" style="position: absolute; top: 20px; left: 20px; font-size: 20px; border: none; background: none; cursor: pointer;">
+        <
+    </button>
+
+    <!-- 배너 -->
+    <p class="center-text">아무말 대잔치</p>
+    <hr class="banner-line"/>
+  
+    <div class="post-container">
+        <div class="post-header">
+            <h1 id="post-title"></h1>
+            <button id="like-btn">
+                <img src="../images/heart-empty.png" alt="좋아요" id="like-icon">
+            </button>
+        </div>
+        <p id="post-meta"></p>
+        <p id="post-content"></p>
+
+        <!-- 좋아요 & 조회수 -->
+        <div class="post-stats">
+            ❤️ <span id="like-count">0</span> ・ 👀 <span id="view-count">0</span>
+        </div>
+
+        <!-- 수정/삭제 버튼 -->
+        <button id="edit-btn" style="display:none;">✏️ 수정</button>
+        <button id="delete-btn" style="display:none;">🗑 삭제</button>
+
+        <!-- 댓글 목록 -->
+        <h2>댓글</h2>
+        <div id="comments"></div>
+
+        <!-- 댓글 작성 -->
+        <textarea id="comment-input" placeholder="댓글을 입력하세요"></textarea>
+        <button id="comment-btn">댓글 작성</button>
+    </div>
+</body>
+</html>

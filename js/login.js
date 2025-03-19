@@ -52,25 +52,28 @@ document.addEventListener("DOMContentLoaded", function () {
     loginButton.addEventListener("click", async function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
         if (loginButton.disabled) return;
-
+    
         const email = emailInput.value.trim();
-
         const password = passwordInput.value.trim();
-
-        try{
-            const response = await fetch("http://localhost:8080/login",{
+    
+        try {
+            const response = await fetch("http://localhost:8080/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({email, password})
+                body: JSON.stringify({ email, password })
             });
+    
             if (!response.ok) {
                 throw new Error("서버 응답 오류");
             }
-
+    
             const data = await response.json();
-
-            if(data.success) {
-                alert(data.message);
+    
+            if (data.success) {
+                localStorage.setItem("loggedInUser", data.userId); // 서버에서 받은 userId 저장
+                localStorage.setItem("Email", data.email);
+                localStorage.setItem("Nickname", data.nickname);
+                localStorage.setItem("profileImg", data.profileImg);
                 window.location.href = "postboard.html"; // 게시판 페이지로 이동
             } else {
                 alert(data.message);
@@ -80,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("서버 연결에 실패했습니다.");
         }
     });
+    
 
     // 회원가입 버튼 클릭 시 페이지 이동
     signupButton.addEventListener("click", function () {

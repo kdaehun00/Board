@@ -1,0 +1,228 @@
+/* 전체 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* 배너 스타일 */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: white;
+}
+
+/* 배너 텍스트 */
+.center-text {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+    cursor: pointer;
+    /* 배너 클릭 가능하게 설정 */
+}
+
+/* 배너 아래 구분선 */
+.banner-line {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+/* 프로필 이미지 (배너 우측 끝) */
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* 게시글 컨테이너 */
+.post-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* 제목과 좋아요 버튼 */
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* 좋아요 버튼 */
+#like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+/* 좋아요 아이콘 크기 */
+#like-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+/* 좋아요 버튼 호버 효과 */
+#like-btn:hover img {
+    opacity: 0.8;
+}
+
+/* 좋아요 & 조회수 */
+.post-stats {
+    font-size: 14px;
+    color: #777;
+    margin: 10px 0;
+}
+
+/* 게시글 제목 */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* 작성자, 조회수 */
+#post-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* 본문 */
+#post-content {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 수정, 삭제 버튼 */
+#edit-btn,
+#delete-btn {
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#delete-btn {
+    background-color: #4633a6;
+}
+
+#edit-btn:hover {
+    background-color: #7F6AEE;
+}
+
+#delete-btn:hover {
+    background-color: #2f1e7b;
+}
+
+.comment-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* 삭제 버튼을 오른쪽으로 밀어냄 */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.comment-content-wrapper {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
+}
+
+.comment-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-content {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: gray;
+}
+
+.comment-input-container {
+    display: flex;
+    align-items: center;
+    /* 세로 정렬 */
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+#comment-input {
+    flex-grow: 1;
+    /* 입력창이 유동적으로 늘어나도록 설정 */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    /* 사용자가 크기 조절 못하게 */
+    min-height: 40px;
+    width: 70%;
+}
+
+#comment-btn {
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-height: 40px;
+    /* 입력칸과 동일한 높이 설정 */
+    white-space: nowrap;
+    /* 버튼 크기가 자동으로 늘어나지 않도록 설정 */
+}
+
+#comment-btn:hover {
+    background-color: #7F6AEE;
+}
+
+.delete-comment-btn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: auto;
+    /* 자동으로 오른쪽으로 이동 */
+}
+
+.delete-comment-btn:hover {
+    color: darkred;
+}

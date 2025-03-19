@@ -1,55 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>회원가입</title>
-  <link rel="stylesheet" href="../css/signup.css">
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="../css/signup.css">
 </head>
-<p class="center-text">아무말 대잔치</p>
-<hr/>
-<body-content>
+<body>
+    <header>
+        <p class="center-text">아무말 대잔치</p>
+        <hr/>
+    </header>
 
-  <h1>회원가입</h1>
+    <!-- 중앙 정렬 컨테이너 -->
+    <div id="container">
 
-  <!-- 프로필 사진 업로드 -->
-  <div class="profile-upload">
-    <label for="profile-img">
-      <img id="profile-preview" src="https://via.placeholder.com/100" alt="프로필 사진">
-    </label>
-    <input type="file" id="profile-img" accept="image/*">
-    <p class="helper-text">* 프로필 사진을 추가해주세요</p>
-  </div>
-  
-  <!-- 회원가입 폼 -->
-  <form id="signup-form">
-    <div>
-      <label for="email">이메일*</label>
-      <input type="text" id="email" placeholder="이메일을 입력하세요">
-      <p class="helper-text" id="email-helper"></p>
+        <!-- 프로필 사진 업로드 -->
+        <div class="profile-upload">
+            <label for="profile-img">
+                 <img id="profile-preview" src="https://picsum.photos/100" alt="프로필 사진">
+            </label>
+            <input type="file" id="profile-img" accept="image/*">
+            <p class="helper-text">* 프로필 사진을 추가해주세요</p>
+        </div>
+        
+        <!-- 회원가입 폼 -->
+        <form id="signup-form">
+            <div>
+                <label for="email">이메일*</label>
+                <input type="text" id="email" placeholder="이메일을 입력하세요">
+                <p class="error-message" id="email-helper"></p>
+            </div>
+            <div>
+                <label for="password">비밀번호*</label>
+                <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+                <p class="error-message" id="password-helper"></p>
+            </div>
+            <div>
+                <label for="confirm-password">비밀번호 확인*</label>
+                <input type="password" id="confirm-password" placeholder="비밀번호를 한 번 더 입력하세요">
+                <p class="error-message" id="confirm-password-helper"></p>
+            </div>
+            <div>
+                <label for="nickname">닉네임*</label>
+                <input type="text" id="nickname" placeholder="닉네임을 입력하세요">
+                <p class="error-message" id="nickname-helper"></p>
+            </div>
+
+            <!-- 회원가입 버튼 -->
+            <button id="signup-btn" type="submit" disabled>회원가입</button>
+        </form>
+
+        <!-- 로그인 페이지 이동 버튼 -->
+        <p class="login-link">이미 계정이 있나요? <a href="login.html">로그인하기</a></p>
     </div>
-    <div>
-      <label for="password">비밀번호*</label>
-      <input type="password" id="password" placeholder="비밀번호를 입력하세요">
-      <p class="helper-text" id="password-helper"></p>
-    </div>
-    <div>
-      <label for="confirm-password">비밀번호 확인*</label>
-      <input type="password" id="confirm-password" placeholder="비밀번호를 한 번 더 입력하세요">
-      <p class="helper-text" id="confirm-password-helper"></p>
-    </div>
-    <div>
-      <label for="nickname">닉네임*</label>
-      <input type="text" id="nickname" placeholder="닉네임을 입력하세요">
-      <p class="helper-text" id="nickname-helper"></p>
-    </div>
-  </form>
 
-  <!-- 회원가입 버튼 -->
-  <button id="signup-btn" disabled>회원가입</button>
-
-  <!-- 로그인 이동 버튼 -->
-  <p class="login-link">로그인하러 가기</p>
-
-  <script type="module" src="../js/signup.js"></script>
-</body-content>
+    <script type="module" src="../js/signup.js"></script>
+</body>
 </html>

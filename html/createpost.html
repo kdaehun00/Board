@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="../css/createpost.css">
+</head>
+<body>
+    <!-- 배너 -->
+    <p class="center-text">아무말 대잔치</p>
+    <hr class="banner-line"/>
+
+    <div class="container">
+        <h2>게시글 작성</h2>
+        
+        <form id="post-form">
+            <label for="title">제목</label>
+            <input type="text" id="title" placeholder="제목을 입력하세요">
+
+            <label for="content">내용</label>
+            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+
+            <button type="submit" id="submit-btn">작성하기</button>
+            <button type="button" id="cancel-btn">취소</button>
+        </form>
+    </div>
+
+    <script src="../js/createpost.js"></script>
+</body>
+</html>

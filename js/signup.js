@@ -9,15 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (file) {
             const objectURL = URL.createObjectURL(file); // 브라우저에서 접근 가능한 URL 생성
             profilePreview.src = objectURL; // 미리보기 설정
-            profileImgInput.dataset.path = objectURL; // 파일 경로를 data-path 속성에 저장
         }
     });
 
     // 미리보기 클릭 시 초기화 (기본 이미지로 변경)
     profilePreview.addEventListener("click", function () {
         profileImgInput.value = "";
-        profilePreview.src = "../images/default-profile.png";
-        profileImgInput.dataset.path = ""; // 저장된 이미지 경로 제거
+        profilePreview.src = "https://picsum.photos/100"; // 기본 이미지 설정
     });
 
     const emailInput = document.getElementById("email");
@@ -88,32 +86,73 @@ document.addEventListener("DOMContentLoaded", function () {
     confirmPasswordInput.addEventListener("input", validateForm);
     nicknameInput.addEventListener("input", validateForm);
 
-    // 회원가입 버튼 클릭 이벤트 (JSON 데이터 전송)
-    signupButton.addEventListener("click", async function () {
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        const nickname = nicknameInput.value;
+    // 이미지 업로드 함수 (파일을 업로드하고 URL을 반환)
+    async function uploadImage(file) {
+        const formData = new FormData();
+        formData.append("file", file);
 
         try {
-            const response = await fetch("http://localhost:8080/signup", {
+            const response = await fetch("http://localhost:8080/users/images-upload", { // 경로 확인 필요
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, nickname})
+                body: formData
             });
 
             if (!response.ok) {
-                throw new Error("서버 응답 오류");
+                throw new Error(`이미지 업로드 실패: ${response.status} ${response.statusText}`);
             }
 
+            // JSON 데이터를 받아서 URL 반환
             const data = await response.json();
-            if (data.success) {
-                alert(data.message);
-                window.location.href = "login.html";
-            } else {
-                alert("회원가입에 실패했습니다!");
-            }
+
+            return data.profileImg;
         } catch (error) {
-            alert("서버 연결에 실패했습니다.");
+            console.error("이미지 업로드 오류:", error);
+            return "https://picsum.photos/100"; // 기본 이미지 반환
+        }
+    }
+
+    // 회원가입 버튼 클릭 이벤트 (이미지 업로드 후 URL 포함하여 JSON 전송)
+    const signupForm = document.getElementById("signup-form");
+
+    signupForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        signupButton.disabled = true;
+        signupButton.textContent = "가입 처리 중..."; // UX 개선
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        const nickname = nicknameInput.value;
+        const profileImage = profileImgInput.files[0];
+
+        let profileImg = "https://picsum.photos/100"; // 기본 이미지
+
+        if (profileImage) {
+            profileImg = await uploadImage(profileImage); // 이미지 먼저 업로드 후 URL 받기
+        }
+
+        const userData = { email, password, nickname, profileImg };
+
+        try {
+            const response = await fetch("http://localhost:8080/signup", { // 경로 확인 필요
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            });
+            
+            const data = response.JSON.stringify();
+
+            if (!response.ok) {
+                alert(data.message)
+            }
+
+            alert("회원가입 성공!");
+            window.location.href = "login.html";
+        } catch (error) {
+            alert("회원가입 중 오류 발생");
+        } finally {
+            signupButton.disabled = false;
+            signupButton.textContent = "회원가입";
         }
     });
 
