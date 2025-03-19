@@ -16,13 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (loggedInUser.userId) {
         console.log(localStorage.getItem("profileImg"));
         profileImg.src = loggedInUser.profileImg || "https://picsum.photos/50"; // 기본 이미지 설정
-        console.log("📌 로그인한 사용자 프로필 이미지:", loggedInUser.profileImg);
     } else {
         alert("로그인이 필요합니다.");
         window.location.href = "login.html"; // 로그인 페이지로 이동
     }
 
-    // ✅ 프로필 이미지 클릭 시 메뉴 토글
+    // 프로필 이미지 클릭 시 메뉴 토글
+
     profileImg.addEventListener("click", function (event) {
         event.stopPropagation();
         profileMenu.style.display = (profileMenu.style.display === "block") ? "none" : "block";
@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ✅ 로그아웃 기능
+
+    // 로그아웃 기능
     logoutBtn.addEventListener("click", function () {
         localStorage.removeItem("loggedInUser");
         localStorage.removeItem("Email");
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("로그아웃 되었습니다.");
         window.location.href = "login.html";
     });
-    // ✅ 숫자 포맷팅 함수 (1000 이상일 경우 k 단위 변환)
+    // 숫자 포맷팅 함수 (1000 이상일 경우 k 단위 변환)
     function formatNumber(num) {
         if (num >= 100000) return Math.floor(num / 1000) + "k";
         if (num >= 10000) return (num / 1000).toFixed(0) + "k";
@@ -51,14 +52,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return num;
     }
 
-    // ✅ 날짜 포맷팅 함수 (Invalid Date 방지)
+    // 날짜 포맷팅 함수 (Invalid Date 방지)
     function formatDate(dateString) {
         if (!dateString) return "날짜 없음"; // 값이 없을 경우 기본값 반환
         const date = new Date(dateString);
         return isNaN(date) ? "날짜 오류" : date.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric" });
     }
 
-    // ✅ 최신 게시글 목록 가져오기
+    // 최신 게시글 목록 가져오기
     async function fetchPosts() {
         try {
             const response = await fetch("http://localhost:8080/posts", {
@@ -69,15 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) throw new Error("서버 응답 실패");
 
             const responseData = await response.json(); // JSON 변환
-            console.log("📌 서버 응답 데이터:", responseData);
+            console.log("서버 응답 데이터:", responseData);
 
-            return responseData;  // ✅ `response.data`가 아니라, 전체 응답 데이터 반환
+            return responseData; 
         } catch (error) {
             console.error("게시물 불러오기 오류:", error);
             return [];
         }
     }
-
 
     async function renderPosts() {
         postList.innerHTML = ""; // 기존 게시글 목록 초기화
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const postItem = document.createElement("div");
             postItem.classList.add("post-item");
 
-            // ✅ 프로필 이미지가 없을 경우 기본 이미지 제공
+            // 프로필 이미지가 없을 경우 기본 이미지 제공
             const profileImageUrl = post.profileImg || "https://picsum.photos/50";
 
             postItem.innerHTML = `
@@ -110,10 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("📌 게시글 날짜 데이터:", post.createPostDate);
 
-            // ✅ 게시글 클릭 시 조회수 증가 후 상세 페이지 이동
+            // 게시글 클릭 시 조회수 증가 후 상세 페이지 이동
             postItem.addEventListener("click", async function () {
                 try {
-                    // ✅ 조회수 증가 요청 (PATCH)
+                    // 조회수 증가 요청 (PATCH)
                     const patchResponse = await fetch(`http://localhost:8080/posts/${post.postId}/views`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" }
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const patchData = await patchResponse.json();
                     console.log(`📌 조회수 증가 완료: ${patchData.views}`);
 
-                    // ✅ 최신 게시글 데이터 반영 (조회수 증가 후 업데이트)
+                    // 최신 게시글 데이터 반영 (조회수 증가 후 업데이트)
                     setTimeout(async () => {
                         await fetchPosts();
                         renderPosts();
@@ -141,14 +141,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-
-
-    // ✅ 초기 게시글 목록 렌더링
+    // 초기 게시글 목록 렌더링
     renderPosts();
 
-    // ✅ 게시글 작성 페이지로 이동
+    // 게시글 작성 페이지로 이동
     writePostButton.addEventListener("click", function () {
         window.location.href = "createpost.html";
     });
-
 });
