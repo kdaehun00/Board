@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.removeItem("Email");
         localStorage.removeItem("Nickname");
         localStorage.removeItem("profileImg");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         alert("로그아웃 되었습니다.");
         window.location.href = "login.html";
     });
@@ -72,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const responseData = await response.json(); // JSON 변환
             console.log("서버 응답 데이터:", responseData);
 
-            return responseData; 
+            return responseData;
         } catch (error) {
             console.error("게시물 불러오기 오류:", error);
             return [];
@@ -99,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             postItem.innerHTML = `
                 <div class="post-header">
                     <img class="post-profile-img" src="${profileImageUrl}" alt="작성자 프로필 이미지">
-                    <p class="post-author">${post.nickname}</p>
+                    <p class="post-author">${post.nickname || "알 수 없음"}</p>
                 </div>
                 <h3 class="post-title">${post.title.length > 26 ? post.title.substring(0, 26) + "..." : post.title}</h3>
                 <p class="post-meta">
@@ -124,18 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     const patchData = await patchResponse.json();
                     console.log(`📌 조회수 증가 완료: ${patchData.views}`);
 
-                    // 최신 게시글 데이터 반영 (조회수 증가 후 업데이트)
-                    setTimeout(async () => {
-                        await fetchPosts();
-                        renderPosts();
-                    }, 500);
-
                 } catch (error) {
                     console.error("📌 게시물 상세 조회 오류:", error);
                 } finally {
-                    window.location.href = `postdetail.html?id=${post.postId}`;
+                    // 쿼리스트링으로 userId과 postSlug 전달
+                    window.location.href = `postdetail.html?user=${post.userId || "unknown"}&slug=${post.postSlug}`;
                 }
             });
+
 
             postList.appendChild(postItem);
         });

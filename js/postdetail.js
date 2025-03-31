@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", async function () {
+
     const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get("id");
+    const userId = urlParams.get("user");
+    const postSlug = urlParams.get("slug");
     const loggedInUser = localStorage.getItem("loggedInUser");
+    const token = localStorage.getItem("accessToken"); // 저장된 토큰
 
     const postTitle = document.getElementById("post-title");
     const postContent = document.getElementById("post-content");
@@ -17,36 +20,32 @@ document.addEventListener("DOMContentLoaded", async function () {
     const commentBtn = document.getElementById("comment-btn");
     const backBtn = document.getElementById("back-btn");
 
-    let likes = false; // 좋아요 상태 저장
+    let likes = false;
+    let postId = null;
 
-    // 뒤로가기 버튼 기능 추가
     backBtn.addEventListener("click", function () {
         history.back();
     });
 
-
-    // 게시글 데이터 가져오기
     async function fetchPost() {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${postId}`);
-            const data = response.JSON.stringify();
-            if (!response.ok) alert(data.message);
+            const response = await fetch(`http://localhost:8080/${userId}/${postSlug}`);
+            if (!response.ok) throw new Error("게시글을 불러올 수 없습니다.");
 
-            const post = await response.json(); // 응답을 바로 사용
+            const post = await response.json();
+            postId = post.postId; // 이후 좋아요/댓글 기능에 사용됨
 
             postTitle.textContent = post.title;
             postContent.textContent = post.content;
-            postMeta.textContent = `작성자: ${post.nickname} ・ 조회수: ${post.views}`;
+            postMeta.textContent = `작성자: ${post.nickname || "알 수 없음"} ・ 조회수: ${post.views}`;
             likeCount.textContent = post.likes;
             viewCount.textContent = post.views;
 
-            // 본인 게시물일 경우 수정 & 삭제 버튼 표시
             if (String(post.userId) === loggedInUser) {
                 editBtn.style.display = "inline";
                 deleteBtn.style.display = "inline";
             }
 
-            // 좋아요 상태 체크
             likes = await checkLikeStatus(postId, loggedInUser);
             updateLikeButton();
         } catch (error) {
@@ -54,8 +53,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-
-    // 특정 사용자의 좋아요 상태 체크
     async function checkLikeStatus(postId, loggedInUser) {
         try {
             const response = await fetch(`http://localhost:8080/posts/${postId}/likes/${loggedInUser}`);
@@ -71,17 +68,20 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchComments() {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${postId}/comments`);
+            const response = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
             if (!response.ok) throw new Error("댓글 데이터를 불러올 수 없습니다.");
 
             const data = await response.json();
-            commentsDiv.innerHTML = ""; // 기존 댓글 초기화
+            commentsDiv.innerHTML = "";
 
             data.forEach(comment => {
                 const commentItem = document.createElement("div");
                 commentItem.classList.add("comment-item");
 
-                // 프로필 이미지가 없을 경우 기본 이미지 제공
                 const profileImageUrl = comment.profileImg || "https://picsum.photos/40";
 
                 commentItem.innerHTML = `
@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     </div>
                 `;
 
-                // 🔹 본인의 댓글이면 삭제 버튼 추가
                 if (String(comment.nickname) === localStorage.getItem("Nickname")) {
                     const deleteCommentBtn = document.createElement("button");
                     deleteCommentBtn.textContent = "삭제 ❌";
@@ -111,14 +110,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-
-
-    // 댓글 삭제 함수
     async function deleteComment(commentId) {
         if (!confirm("댓글을 삭제하시겠습니까?")) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/posts/${postId}/comments/${commentId}`, { method: "DELETE" });
+            const response = await fetch(`http://localhost:8080/posts/${postId}/comments/${commentId}`, {
+                method: "DELETE"
+            });
 
             if (!response.ok) throw new Error("댓글 삭제 실패");
 
@@ -129,18 +127,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-    // 좋아요 버튼 상태 업데이트
     function updateLikeButton() {
         likeIcon.src = likes ? "../images/heart-filled.png" : "../images/heart-empty.png";
         likeBtn.classList.toggle("liked", likes);
     }
 
-    // 좋아요 기능
     likeBtn.addEventListener("click", async function () {
         try {
             let response;
             if (likes) {
-                console.log(postId);
                 response = await fetch(`http://localhost:8080/posts/${postId}/likes/${loggedInUser}`, { method: "DELETE" });
             } else {
                 response = await fetch(`http://localhost:8080/posts/${postId}/likes/${loggedInUser}`, { method: "POST" });
@@ -157,7 +152,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
-    // 댓글 작성
     commentBtn.addEventListener("click", async function () {
         const content = commentInput.value.trim();
         if (!content) return alert("댓글을 입력하세요.");
@@ -176,12 +170,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
-    // 게시글 수정
     editBtn.addEventListener("click", function () {
-        window.location.href = `editPost.html?id=${postId}`;
+        window.location.href = `editPost.html?id=${postId}&userId=${userId || "unknown"}&slug=${postSlug}`;
     });
 
-    // 게시글 삭제
     deleteBtn.addEventListener("click", async function () {
         if (!confirm("정말 삭제하시겠습니까?")) return;
 
@@ -197,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
-    // 초기 데이터 로드
-    fetchPost(); // 게시글 데이터 불러오기
-    fetchComments(); // 댓글 목록 불러오기
+    // 🔥 게시글 먼저 불러온 후 postId 확보하고 → 좋아요 & 댓글 처리
+    await fetchPost();
+    await fetchComments();
 });

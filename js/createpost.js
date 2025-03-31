@@ -9,16 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
     async function createPost(title, content) {
         try {
             const userId = Number(localStorage.getItem("loggedInUser"));
+            const userNickname = localStorage.getItem("Nickname");
             if (!userId) {
                 alert("로그인이 필요합니다.");
                 window.location.href = "login.html";
                 return;
             }
 
-            const response = await fetch("http://localhost:8080/posts", {
+            const response = await fetch("http://localhost:8080/write", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, title, content })
+                body: JSON.stringify({ userId, userNickname, title, content })
             });
 
             const responseData = await response.json();

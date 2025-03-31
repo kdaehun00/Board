@@ -116,45 +116,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     signupForm.addEventListener("submit", async function (event) {
         event.preventDefault();
-
+    
         signupButton.disabled = true;
         signupButton.textContent = "가입 처리 중..."; // UX 개선
-
+    
         const email = emailInput.value;
         const password = passwordInput.value;
         const nickname = nicknameInput.value;
         const profileImage = profileImgInput.files[0];
-
+    
         let profileImg = "https://picsum.photos/100"; // 기본 이미지
-
+    
         if (profileImage) {
             profileImg = await uploadImage(profileImage); // 이미지 먼저 업로드 후 URL 받기
         }
-
+    
         const userData = { email, password, nickname, profileImg };
-
+    
         try {
-            const response = await fetch("http://localhost:8080/signup", { // 경로 확인 필요
+            const response = await fetch("http://localhost:8080/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData)
             });
-            
-            const data = response.JSON.stringify();
-
-            if (!response.ok) {
-                alert(data.message)
-            }
-
-            alert("회원가입 성공!");
+    
+            if (response.ok) {
+                alert("회원가입 성공!");
             window.location.href = "login.html";
+            }else {
+                const errorData = await response.json();  // ❗ 중요: 에러 응답을 JSON으로 받음
+                alert(errorData.message || "알 수 없는 오류가 발생했습니다.");
+            }
         } catch (error) {
-            alert("회원가입 중 오류 발생");
+            alert(error.message);
         } finally {
             signupButton.disabled = false;
             signupButton.textContent = "회원가입";
         }
     });
+    
 
     // 로그인 페이지로 이동
     loginLink.addEventListener("click", function () {

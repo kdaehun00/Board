@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: formData
                 });
     
-                if (!response.ok) throw new Error("프로필 이미지 업로드 실패");
+                if (!response.ok) throw new Error("🚨 프로필 이미지 업로드 실패");
     
                 const data = await response.json();
                 uploadedProfileImgUrl = data.url || data.profileImg;
@@ -85,10 +85,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify({ nickname: newNick })
                 });
     
-                if (!updateResponse.ok) throw new Error("🚨 닉네임 업데이트 실패");
-    
-                localStorage.setItem("Nickname", newNick);
-                alert("닉네임이 변경되었습니다.");
+                if (!updateResponse.ok) {
+                    const errorData = await updateResponse.json();
+                    throw new Error(errorData.message);
+                } else{
+                    // localStorage 업데이트
+                    localStorage.setItem("Nickname", newNick);
+                    alert("닉네임이 변경되었습니다.");
+                    window.location.href = "postboard.html";
+
+                }
             }
     
             // 프로필 이미지만 변경할 경우
@@ -96,14 +102,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 const updateResponse = await fetch(`http://localhost:8080/users/${loggedInUserId}/info/profileImg`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ profileImg: uploadedProfileImgUrl }) // JSON으로 보냄
+                    body: JSON.stringify({ profileImg: uploadedProfileImgUrl })
                 });
-                
     
-                if (!updateResponse.ok) throw new Error("프로필 이미지 업데이트 실패");
+                if (!updateResponse.ok) throw new Error("🚨 프로필 이미지 업데이트 실패");
     
+                // localStorage 업데이트
                 localStorage.setItem("profileImg", uploadedProfileImgUrl);
+    
                 alert("프로필 이미지가 변경되었습니다.");
+                window.location.href = "postboard.html";
             }
     
             // 닉네임과 프로필 이미지를 동시에 변경하는 경우
@@ -117,31 +125,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 await fetch(`http://localhost:8080/users/${loggedInUserId}/info/profileImg`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ profileImg: uploadedProfileImgUrl }) // JSON으로 보냄
+                    body: JSON.stringify({ profileImg: uploadedProfileImgUrl })
                 });
     
-    
+                // localStorage 업데이트
                 localStorage.setItem("Nickname", newNick);
                 localStorage.setItem("profileImg", uploadedProfileImgUrl);
+    
                 alert("회원 정보가 수정되었습니다.");
+                window.location.href = "postboard.html";
             }
     
             // UI 업데이트
             modifyBtn.style.display = "none";
             modifyDoneBtn.style.display = "inline-block";
-            window.location.href = "postboard.html";
     
         } catch (error) {
-            alert("회원 정보를 수정할 수 없습니다.");
+            alert(error.message);
         }
     });
-    
-    // 회원 탈퇴 기능
+
     deleteBtn.addEventListener("click", function () {
         modalOverlay.style.display = "flex";
     });
+    
 
     confirmDeleteBtn.addEventListener("click", async function () {
+
+        console.log(loggedInUserId);
         try {
             const response = await fetch(`http://localhost:8080/users/${loggedInUserId}`, {
                 method: "DELETE"

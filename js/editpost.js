@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get("id");
+    let postId = urlParams.get("id");
+    let postSlug = urlParams.get("slug");
+    let userId = urlParams.get("userId")
     const loggedInUser = localStorage.getItem("loggedInUser");
 
     const postForm = document.getElementById("post-form");
@@ -12,18 +14,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 게시글 정보 불러오기
     async function fetchPost() {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${postId}`);
+            const response = await fetch(`http://localhost:8080/${userId}/${postSlug}`);
             if (!response.ok) throw new Error("게시글 데이터를 불러올 수 없습니다.");
             
             const data = await response.json();
-            const post = data.data;
-
+            postSlug = data.postSlug;
+            userId = data.userId;
             // 입력 필드에 기존 게시글 정보 채우기
-            titleInput.value = post.title;
-            contentInput.value = post.content;
+            titleInput.value = data.title;
+            contentInput.value = data.content;
 
             // 수정 권한 체크 (작성자만 수정 가능)
-            if (String(post.userId) !== loggedInUser) {
+            if (String(data.userId) !== loggedInUser) {
                 alert("게시글 수정 권한이 없습니다.");
                 window.location.href = "postboard.html";
             }
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.log(title, content);
             if (response.ok) {
                 alert("게시글이 수정되었습니다.");
-                window.location.href = `postdetail.html?id=${postId}`;
+                window.location.href = `postdetail.html?user=${userId || "unknown"}&slug=${postSlug}`;
             } else {
                 alert("게시글 수정 실패: ");
             }
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // 취소 버튼 클릭 시 게시글 상세 페이지로 이동
     cancelButton.addEventListener("click", function () {
-        window.location.href = `postdetail.html?id=${postId}`;
+        window.location.href = `postdetail.html?user=${userId || "unknown"}&slug=${postSlug}`;
     });
 
     // 페이지 로드 시 기존 데이터 불러오기

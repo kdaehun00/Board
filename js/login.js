@@ -64,9 +64,30 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     
             if (!response.ok) {
-                throw new Error("서버 응답 오류");
+                const errorData = await response.json();
+                throw new Error(errorData.message);
             }
+
+            const data = await response.json();
+
+            if(data){
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+                localStorage.setItem("loggedInUser", data.userId); // 서버에서 받은 userId 저장
+                localStorage.setItem("Email", data.email);
+                localStorage.setItem("Nickname", data.nickname);
+                localStorage.setItem("profileImg", data.profileImg);
+                window.location.href = "postboard.html";
+            } else {
+                alert(data.message);
+                passwordInput.value = ""; // 비밀번호 초기화
+            }
+        } catch (error){
+            alert(error.message);
+        }
     
+            /*
+            // 기존 session 방식
             const data = await response.json();
     
             if (data.success) {
@@ -80,8 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 passwordInput.value = ""; // 비밀번호 초기화
             }
         } catch (error) {
-            alert("서버 연결에 실패했습니다.");
+            alert(error.message);
         }
+            */
+
     });
     
 

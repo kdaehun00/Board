@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const newPasswordInput = document.getElementById("new-password");
     const confirmPasswordInput = document.getElementById("confirm-password");
     const changePasswordBtn = document.getElementById("changePasswordBtn");
+    const passwordHelper = document.getElementById("password-helper");
 
     const loggedInUser = localStorage.getItem("loggedInUser");
 
@@ -12,18 +13,28 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // 입력값 검증 및 버튼 활성화
+
     function validateForm() {
         const currentPassword = currentPasswordInput.value.trim();
         const newPassword = newPasswordInput.value.trim();
         const confirmPassword = confirmPasswordInput.value.trim();
 
-        if (currentPassword && newPassword.length >= 8 && newPassword === confirmPassword) {
+        const isMatch = newPassword === confirmPassword;
+
+        if (currentPassword && newPassword.length >= 8 && isMatch) {
             changePasswordBtn.classList.add("active");
             changePasswordBtn.disabled = false;
+            passwordHelper.style.display = "none";
         } else {
             changePasswordBtn.classList.remove("active");
             changePasswordBtn.disabled = true;
+
+            if (newPassword && confirmPassword && !isMatch) {
+                passwordHelper.style.display = "block";
+                passwordHelper.textContent = "* 비밀번호가 일치하지 않습니다.";
+            } else {
+                passwordHelper.style.display = "none";
+            }
         }
     }
 
