@@ -23,35 +23,48 @@ SQLite를 이용한 회원 정보 저장 및 관리할 예정입니다.
 
 조회수, 좋아요, 댓글 기능
 
-# 📄 페이지 전환
 
-JavaScript를 이용한 showPage() 함수로 SPA 방식 적용
+## 💻 주요 화면
 
-# 로그인 화면
-<img width="1234" alt="Image" src="https://github.com/user-attachments/assets/a76d8bd0-e1c6-41e6-b1c2-b6ab6ea5d483" />
+### 🔐 로그인 화면
+<img src="image.png" width="400"/>
 
-로그인 화면이 뜨고, 회원가입도 가능합니다.
+### 🧾 회원가입
+<img src="image-1.png" width="400"/>
 
-# 회원가입
-<img width="1159" alt="Image" src="https://github.com/user-attachments/assets/5c4f126d-d4a6-46e1-bdb4-dc3899c18f68" />
+### 🏠 초기화면 (게시글 목록 & 프로필)
+<img src="image-2.png" width="400"/>
+<img src="image-3.png" width="400"/>
+
+### ✍️ 게시글 작성
+<img src="image-4.png" width="400"/>
+
+### 🛠 게시글 수정
+<img src="image-5.png" width="400"/>
+
+### 💬 댓글 & ❤️ 좋아요
+<img src="image-6.png" width="400"/>
+
+### 👤 회원 정보 수정 (프로필 이미지 & 닉네임)
+<img src="image-7.png" width="400"/>
+
+### 🔒 비밀번호 변경
+<img src="image-8.png" width="400"/>
+
+---
+
+## 🧩 기술 스택
+
+| 영역 | 사용 기술 |
+|------|-----------|
+| 프론트엔드 | HTML, CSS, JavaScript (Vanilla JS) |
 
 
-# 초기화면
-<img width="1173" alt="Image" src="https://github.com/user-attachments/assets/d8a7cc50-37f2-41b7-9ab1-357c32f41b0c" />
-게시물 목록을 확인할 수 있고,
-우측 상단에는 나의 프로필이 보입니다.
+---
 
-<img width="243" alt="Image" src="https://github.com/user-attachments/assets/cf3fb7e6-52aa-48b0-b372-219e8b14f29e" />
+## 🔄 향후 개선 사항 (To-do)
 
-# 게시물 작성
-<img width="933" alt="Image" src="https://github.com/user-attachments/assets/77c25ac3-c491-4f20-945e-42e9551b1227" />
+- 정적 html이 아닌 동적으로 만들기
+- SPA로 개발해보기
 
-# 게시물 수정
-<img width="1044" alt="Image" src="https://github.com/user-attachments/assets/2217f46f-f855-4b18-958e-c1f9dea94b01" />
-
-
-# 추후 추가하고자 하는 기능
-1. 직관적인 UI가 되도록 수정할 계획입니다.
-2. 패키지를 나누어볼 예정입니다.
-3. 회원정보 수정/비밀번호 수정 페이지를 제작할 에정입니다.
-4. 코드를 다시 살펴보며 조금 더 깔끔하고 가독성 있게 짤 수 있을지 고민해보겠습니다.
+---
